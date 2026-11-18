@@ -1,0 +1,419 @@
+/* Dashboard shell, home, listening status and the floating copilot. */
+
+.shell {
+  width: 100%;
+  min-height: 100vh;
+  display: grid;
+  grid-template-columns: 248px minmax(0, 1fr);
+}
+
+.sidebar {
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+  padding: 52px var(--space-3) var(--space-3);
+  background: var(--side);
+  border-right: 1px solid var(--border);
+  -webkit-app-region: drag;
+}
+
+.sidebar button,
+.sidebar a,
+.sidebar select {
+  -webkit-app-region: no-drag;
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  padding: 0 var(--space-2);
+}
+
+.logo-mark {
+  display: grid;
+  place-items: center;
+  width: 34px;
+  height: 34px;
+  border-radius: 10px;
+  background: var(--text);
+  color: var(--honey);
+}
+
+.logo-name {
+  font-family: var(--display);
+  font-size: 19px;
+  font-weight: 600;
+  letter-spacing: 0.01em;
+}
+
+.logo-sub {
+  display: block;
+  font-size: var(--text-xs);
+  color: var(--muted);
+}
+
+.nav-group {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.nav-label {
+  padding: var(--space-2) var(--space-3) var(--space-1);
+  font-size: var(--text-xs);
+  color: var(--muted);
+}
+
+.nav-item {
+  min-height: var(--hit);
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  padding: 0 var(--space-3);
+  border: 0;
+  border-radius: 12px;
+  background: none;
+  color: var(--text);
+  font-weight: 500;
+  font-size: var(--text-lg);
+  text-align: left;
+  cursor: pointer;
+}
+
+.nav-item:hover {
+  background: rgba(31, 31, 36, 0.06);
+}
+
+.nav-item[aria-current='page'] {
+  background: var(--accent);
+  color: var(--accent-text);
+}
+
+.nav-item[aria-current='page'] .icon {
+  color: var(--honey);
+}
+
+.nav-item .grow {
+  flex: 1;
+}
+
+.live-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--short);
+  box-shadow: 0 0 0 3px var(--success-soft);
+}
+
+.side-card {
+  margin-top: auto;
+  padding: var(--space-3) var(--space-4);
+  border-radius: var(--radius);
+  background: var(--accent-soft);
+  color: var(--text);
+}
+
+.side-card .btn {
+  width: 100%;
+  margin-top: var(--space-2);
+}
+
+.side-card kbd {
+  border-color: var(--control-border);
+}
+
+.content {
+  min-width: 0;
+  padding-top: 28px;
+}
+
+.drag-strip {
+  position: fixed;
+  top: 0;
+  left: 248px;
+  right: 0;
+  height: 28px;
+  -webkit-app-region: drag;
+  z-index: 5;
+}
+
+.content main {
+  max-width: var(--vp-wide);
+  padding: var(--space-5) var(--space-6) var(--space-6);
+}
+
+.column-wide {
+  max-width: 1080px;
+  margin-inline: auto;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-5);
+}
+
+/* ---------- Home ---------- */
+
+.home-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1.5fr) minmax(0, 1fr);
+  gap: var(--space-4);
+}
+
+.hero {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+}
+
+.hero .card-title {
+  font-family: var(--display);
+  font-size: 22px;
+}
+
+.btn-large {
+  min-height: 52px;
+  font-size: var(--text-lg);
+  border-radius: 14px;
+}
+
+.tiles {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: var(--space-4);
+}
+
+.tile {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+}
+
+.tile-head {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  color: var(--muted);
+  font-weight: 500;
+}
+
+.tile-mark {
+  display: grid;
+  place-items: center;
+  width: 30px;
+  height: 30px;
+  border-radius: 9px;
+  background: var(--accent-soft);
+  color: var(--text);
+}
+
+.tile-value {
+  font-family: var(--display);
+  font-size: 32px;
+  font-weight: 600;
+  line-height: 1.1;
+}
+
+.checklist {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.checklist li {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  min-height: 52px;
+  padding: var(--space-2) 0;
+  border-bottom: 1px solid var(--border);
+}
+
+.checklist li:last-child {
+  border-bottom: 0;
+}
+
+.check-mark {
+  flex: none;
+  display: grid;
+  place-items: center;
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  border: 1.5px solid var(--control-border);
+  color: transparent;
+}
+
+.check-mark.done {
+  border-color: var(--short);
+  background: var(--short);
+  color: var(--surface);
+}
+
+.check-body {
+  flex: 1;
+  min-width: 0;
+}
+
+.check-title {
+  font-weight: 600;
+}
+
+.check-help {
+  font-size: var(--text-sm);
+  color: var(--muted);
+}
+
+.checklist .btn {
+  min-height: 36px;
+  padding: 0 var(--space-3);
+  font-size: var(--text-sm);
+}
+
+.progress {
+  height: 6px;
+  border-radius: 3px;
+  background: var(--inset);
+  overflow: hidden;
+}
+
+.progress > span {
+  display: block;
+  height: 100%;
+  background: var(--honey);
+}
+
+/* ---------- Listening status ---------- */
+
+.chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+}
+
+.chip {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  min-height: 32px;
+  padding: 0 var(--space-3);
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  background: var(--surface);
+  font-size: var(--text-sm);
+  font-weight: 500;
+  white-space: nowrap;
+}
+
+.chip-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--control-border);
+}
+
+.chip-on .chip-dot {
+  background: var(--short);
+}
+
+.chip-wait .chip-dot {
+  background: var(--honey);
+}
+
+.chip-error .chip-dot {
+  background: var(--danger);
+}
+
+.live-head {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: var(--space-4);
+  flex-wrap: wrap;
+}
+
+/* ---------- Copilot window ---------- */
+
+.copilot {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  background: var(--surface);
+}
+
+.copilot-bar {
+  position: sticky;
+  top: 0;
+  z-index: 4;
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  padding: var(--space-2) var(--space-2) var(--space-2) var(--space-4);
+  background: var(--side);
+  border-bottom: 1px solid var(--border);
+  -webkit-app-region: drag;
+}
+
+.copilot-bar button {
+  -webkit-app-region: no-drag;
+}
+
+.copilot-bar .logo-mark {
+  width: 26px;
+  height: 26px;
+  border-radius: 8px;
+}
+
+.copilot-title {
+  flex: 1;
+  min-width: 0;
+  font-family: var(--display);
+  font-weight: 600;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.copilot-body {
+  flex: 1;
+  padding: var(--space-3) var(--space-4) 0;
+}
+
+.live-compact {
+  gap: var(--space-3);
+}
+
+.live-compact .actionbar {
+  margin: 0 calc(-1 * var(--space-4));
+  border-radius: 0;
+  border-left: 0;
+  border-right: 0;
+  box-shadow: none;
+}
+
+.copilot .empty {
+  padding: var(--space-6) var(--space-3);
+}
+
+button.tile {
+  font: inherit;
+  color: inherit;
+  text-align: left;
+  cursor: pointer;
+}
+
+button.tile:hover {
+  border-color: var(--control-border);
+}
+
+/* Narrow copilot: let the action rows wrap instead of overflowing. */
+.live-compact .actionbar,
+.live-compact .composer-row {
+  flex-wrap: wrap;
+}
+
+.live-compact .actionbar .btn {
+  flex: 1 1 auto;
+}

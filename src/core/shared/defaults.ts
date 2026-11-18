@@ -27,6 +27,7 @@ export const DEFAULT_SETTINGS: Settings = {
   myMeetName: '',
   replyTo: 'questions',
   googleClientId: '',
+  listenToMic: true,
 };
 
 /** Size limits (characters) for each part of the prompt. */

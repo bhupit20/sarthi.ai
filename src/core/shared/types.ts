@@ -19,6 +19,8 @@ export interface Settings {
   replyTo: 'questions' | 'everything';
   /** The owner's own Google OAuth client ID, for Drive and Calendar. Empty = not used. */
   googleClientId: string;
+  /** Also transcribe the owner's microphone (shown as Me). */
+  listenToMic: boolean;
 }
 
 export interface Profile {

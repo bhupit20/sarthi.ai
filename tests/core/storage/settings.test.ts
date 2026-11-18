@@ -31,6 +31,10 @@ describe('settings', () => {
     expect((await loadSettings(kv)).fallbackOrder).toEqual(['openai', 'claude', 'gemini', 'nvidia']);
   });
 
+  it('listens to the microphone by default', async () => {
+    expect((await loadSettings(memoryStore())).listenToMic).toBe(true);
+  });
+
   it('stores the profile text', async () => {
     const kv = memoryStore();
     expect(await loadProfile(kv)).toEqual({ text: '' });
