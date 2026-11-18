@@ -14,16 +14,15 @@
     "e2e": "npm run build && node scripts/e2e.mjs",
     "dist:mac": "npm run build && electron-builder --mac"
   },
-  "dependencies": {
+  "dependencies": {},
+  "devDependencies": {
     "@anthropic-ai/sdk": "^1.10.0",
     "@fontsource/bricolage-grotesque": "^5.3.0",
     "@fontsource/hanken-grotesk": "^5.3.0",
     "@huggingface/transformers": "^3.8.1",
     "idb": "^8.0.4",
     "react": "^18.3.1",
-    "react-dom": "^18.3.1"
-  },
-  "devDependencies": {
+    "react-dom": "^18.3.1",
     "@testing-library/dom": "^10.4.2",
     "@testing-library/react": "^16.3.3",
     "@types/node": "^26.6.6",
@@ -36,5 +35,50 @@
     "jsdom": "^31.0.1",
     "typescript": "^7.0.2",
     "vitest": "^5.1.1"
+  },
+  "author": "SARTHI.AI",
+  "build": {
+    "appId": "ai.sarthi.desktop",
+    "productName": "SARTHI.AI",
+    "directories": {
+      "output": "release",
+      "buildResources": "build"
+    },
+    "files": [
+      "out/**",
+      "package.json"
+    ],
+    "asar": true,
+    "mac": {
+      "category": "public.app-category.productivity",
+      "icon": "build/icon.png",
+      "target": [
+        {
+          "target": "dmg",
+          "arch": [
+            "arm64",
+            "x64"
+          ]
+        },
+        {
+          "target": "zip",
+          "arch": [
+            "arm64",
+            "x64"
+          ]
+        }
+      ],
+      "minimumSystemVersion": "13.0",
+      "hardenedRuntime": true,
+      "entitlements": "build/entitlements.mac.plist",
+      "entitlementsInherit": "build/entitlements.mac.plist",
+      "extendInfo": {
+        "NSMicrophoneUsageDescription": "SARTHI hears your side of the call so your own words appear in the conversation.",
+        "NSAudioCaptureUsageDescription": "SARTHI listens to your call audio to suggest replies. Audio is turned into text on this Mac and never leaves it."
+      }
+    },
+    "dmg": {
+      "title": "SARTHI.AI"
+    }
   }
 }
